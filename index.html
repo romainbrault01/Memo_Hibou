@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mon agenda de devoirs</title>
+<meta name="description" content="Agenda de devoirs pour un élève de CM2, adapté aux enfants DYS.">
+<meta name="theme-color" content="#2C5E8C" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#161D24" media="(prefers-color-scheme: dark)">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png" type="image/png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Mes devoirs">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="wrap">
+  <header class="top">
+    <div>
+      <h1>Mes devoirs</h1>
+      <div class="today" id="today"></div>
+    </div>
+    <div class="tools">
+      <button class="icon-btn" id="btn-install" hidden>⬇ Installer</button>
+      <button class="icon-btn" id="btn-read-all" title="Écouter les devoirs de demain" aria-label="Écouter les devoirs de demain">🔊 Écouter</button>
+      <button class="icon-btn" id="btn-settings" aria-expanded="false" title="Réglages" aria-label="Réglages">Aa</button>
+    </div>
+  </header>
+
+  <section class="settings" id="install-help" hidden>
+    <strong>Installer l'agenda</strong>
+    <div><b>Sur iPad :</b> ouvre cette page dans Safari, touche le bouton Partager (le carré avec une flèche), puis « Sur l'écran d'accueil ».</div>
+    <div><b>Sur tablette Android :</b> dans Chrome, ouvre le menu ⋮ puis « Installer l'application ».</div>
+    <div><b>Sur ordinateur :</b> dans Chrome ou Edge, clique sur l'icône d'installation à droite de la barre d'adresse. Sur Mac avec Safari : menu Fichier, « Ajouter au Dock ».</div>
+  </section>
+
+  <section class="settings" id="settings" hidden>
+    <div class="setting">
+      <strong>Taille du texte</strong>
+      <div class="chips" id="set-size"></div>
+    </div>
+    <div class="setting">
+      <strong>Espace entre les lignes</strong>
+      <div class="chips" id="set-space"></div>
+    </div>
+    <div class="setting">
+      <strong>Sauvegarde</strong>
+      <div class="hint">Les devoirs sont gardés sur cet appareil. Pour les copier sur un autre (tablette, ordinateur), crée un fichier ici puis ouvre-le sur l'autre appareil.</div>
+      <div class="chips">
+        <button class="chip" id="btn-export">Créer un fichier de sauvegarde</button>
+        <button class="chip" id="btn-import">Récupérer une sauvegarde</button>
+        <input type="file" id="import-file" accept="application/json,.json" hidden>
+      </div>
+    </div>
+    <div class="status" id="status"></div>
+  </section>
+
+  <section class="focus" aria-labelledby="focus-title">
+    <div class="focus-head">
+      <h2 id="focus-title">Pour demain</h2>
+      <div class="dots" id="focus-dots"></div>
+    </div>
+    <div class="list" id="focus-list"></div>
+  </section>
+
+  <div class="tabs" role="tablist">
+    <button class="tab" role="tab" id="tab-week" aria-selected="true">Les jours suivants</button>
+    <button class="tab" role="tab" id="tab-done" aria-selected="false">Déjà faits</button>
+  </div>
+  <section id="week"></section>
+</div>
+
+<button class="fab" id="btn-add">+ Ajouter un devoir</button>
+
+<div class="sheet-bg" id="sheet-bg" hidden>
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-title">
+    <h2 id="sheet-title">Nouveau devoir</h2>
+    <div class="step">
+      <div class="step-label"><span class="step-num">1</span>Quelle matière ?</div>
+      <div class="grid" id="pick-subject"></div>
+    </div>
+    <div class="step">
+      <div class="step-label"><span class="step-num">2</span>Qu'est-ce qu'il faut faire ?</div>
+      <div class="grid" id="pick-type"></div>
+    </div>
+    <div class="step">
+      <div class="step-label"><span class="step-num">3</span>Pour quand ?</div>
+      <div class="chips" id="pick-date"></div>
+      <label class="hint" for="other-date">Une autre date :</label>
+      <input type="date" id="other-date" class="date-input">
+    </div>
+    <div class="step">
+      <div class="step-label"><span class="step-num">4</span>Les détails <span class="hint">(pas obligatoire)</span></div>
+      <div class="text-row">
+        <textarea id="details" placeholder="Exemple : exercices 3 et 4 page 52"></textarea>
+        <button class="mic" id="btn-mic" title="Dicter au lieu d'écrire" aria-label="Dicter au lieu d'écrire" hidden>🎤</button>
+      </div>
+      <div class="hint" id="mic-hint" hidden>Appuie sur le micro et dis ton devoir à voix haute.</div>
+    </div>
+    <div class="sheet-actions">
+      <button class="btn" id="btn-cancel">Annuler</button>
+      <button class="btn primary" id="btn-save" disabled>Enregistrer</button>
+    </div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
